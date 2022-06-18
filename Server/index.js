@@ -17,16 +17,25 @@ app.get("/", (req, res) => {
   res.send("Hello there!");
 });
 
-// EndPoints
+// When all connect
 io.on("connection", (socket) => {
-  socket.on("sendToAll", (msg) => {
-    io.emit("sendingToAll", msg);
+  console.log(`New connection: ${socket.id}`);
+
+  // Send message announcement to all excluding new user
+  socket.on("newUser", (id) => {
+    socket.broadcast.emit("announceUsername", `${id} has arrived!`);
   });
 
+  // When the socket disconnects
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('userDisconnected', `user has disconnected`)
+  });
+
+  // Display new message to all connected
   socket.on("newMsg", (msg) => {
     io.emit("sentNewMsg", msg);
-    console.log(msg);
   });
+
 });
 
 server.listen(port, () => {

@@ -1,3 +1,4 @@
+
 Functionality to implement:
 - User signup/login + avatar
 - Broadcast a message to connected users when someone connects or disconnects.
@@ -6,9 +7,27 @@ Functionality to implement:
 - Add “{user} is typing” functionality.
 - Show who’s online.
 - Add private messaging + group chats.
+- (IMPO) Confirmation before page reload/close and navigate to the login page
 
 Goals:
 - (DONE) Understand the tools needed (Socket.io, NodeJS, ReactJS)
 - (DONE) Set backend + frontend
 - (DONE) Allow for dialouge (any user)
-- (DONE) Display usernames
+- (DONE) Display usernames 
+- (DONE) Message on new user & user disconnect
+    - Display username of disconnected user...
+- Change text position of sender and receiver (Allow for multiple users)
+
+Errors:
+- The broadcast is showing the message to all users instead of excluding the recently connected One
+    - Components automatically re-render when state changes which means that a new socket connection is triggered each time
+    - (DONE added global socket instance)Possible fix: Allow for socket connection from the LOGIN page. That way a new connection will not form when
+      componenets re-render based on activity from the chat feature.
+
+
+Note:
+as soon as new tab/refresh => new socket created.
+if the user refreshes during the chat, then all the socket info is lost and 
+the user has to be forced to go back to the login page...
+You cannot keep the same socket.io or webSocket client connection when the
+page is changed or refreshed. 

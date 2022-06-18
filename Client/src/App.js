@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./Components/LoginPage";
-import ChatPage from "./Components/ChatPage";
+import LoginPage from "./Pages/LoginPage";
+import ChatPage from "./Pages/ChatPage";
 
 function App() {
   return (

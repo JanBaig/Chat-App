@@ -1,0 +1,26 @@
+
+.container {
+    position: absolute;
+    text-align: left;
+    height: 350px;
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.searchBar {
+    position: absolute;
+    top:85%;
+    left:15%;
+}
+
+/* Change based on sender or receiver */
+.chatMessages {
+    text-align: center;
+}
+
+.container h2, h5 {
+    text-align: center;
+}
