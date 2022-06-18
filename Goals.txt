@@ -9,4 +9,6 @@ Functionality to implement:
 
 Goals:
 - (DONE) Understand the tools needed (Socket.io, NodeJS, ReactJS)
-- () Set backend + frontend 
+- (DONE) Set backend + frontend
+- (DONE) Allow for dialouge (any user)
+- (DONE) Display usernames

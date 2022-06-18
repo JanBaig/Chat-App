@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
-  
-  return (
-  <div>
-    <h2>Login Page</h2>
-    <button onClick={() => navigate('/chat')}>Start</button>
-  </div>
-  )
-}
+  const [username, setUsername] = useState("");
 
-export default Login
+  return (
+    <div>
+      <h2>Login Page</h2>
+      <input
+        type="text"
+        placeholder="Enter username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <button onClick={() => navigate(`/chat/${username}`)}>Start</button>
+    </div>
+  );
+};
+
+export default LoginPage;
