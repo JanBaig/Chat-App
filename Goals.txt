@@ -17,11 +17,12 @@ Goals:
 - (DONE) Message on new user & user disconnect
     - Display username of disconnected user...
 - Change text position of sender and receiver (Allow for multiple users)
+    - How? Unless the messages are sent with their individual sockets...
 
 Errors:
 - The broadcast is showing the message to all users instead of excluding the recently connected One
     - Components automatically re-render when state changes which means that a new socket connection is triggered each time
-    - (DONE added global socket instance)Possible fix: Allow for socket connection from the LOGIN page. That way a new connection will not form when
+    - (DONE added global socket instance) Possible fix: Allow for socket connection from the LOGIN page. That way a new connection will not form when
       componenets re-render based on activity from the chat feature.
 
 

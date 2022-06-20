@@ -27,8 +27,8 @@ io.on("connection", (socket) => {
   });
 
   // When the socket disconnects
-  socket.on('disconnect', () => {
-    socket.broadcast.emit('userDisconnected', `user has disconnected`)
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("userDisconnected", `user has disconnected`);
   });
 
   // Display new message to all connected
@@ -36,6 +36,11 @@ io.on("connection", (socket) => {
     io.emit("sentNewMsg", msg);
   });
 
+  // Design Details
+  socket.on("designDetails", (msgSide) => {
+    socket.emit("senderDesign", msgSide);
+    socket.broadcast.emit("receiverDesign", "left");
+  });
 });
 
 server.listen(port, () => {

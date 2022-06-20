@@ -7,12 +7,26 @@ const ChatPage = () => {
   const [notif, setNotif] = useState(null);
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const [msgSide, setMsgSide] = useState("right");
   const { id } = useParams();
 
   // Whenever 'socket' changes - new emit/on this renders again
   useEffect(() => {
     // Sending from client now when this page gets rendered
     socket.emit("newUser", id);
+
+    // Design details
+    socket.emit("designDetails", msgSide);
+
+    // Receiving design details for sender
+    socket.on("senderDesign", (msg) => {
+      setMsgSide(msg);
+    });
+
+    // Receiving design details for receiver
+    socket.on("receiverDesign", (msg) => {
+      setMsgSide(msg);
+    });
 
     //Display arrival of a new user
     socket.on("announceUsername", (msg) => {
@@ -44,10 +58,15 @@ const ChatPage = () => {
     <div className="container">
       <h2>Chat App</h2>
       <h5>{notif}</h5>
+      <p>{msgSide}</p>
 
       <div className="chatMessages">
         {messageList.map((message, count) => {
-          return <div key={count}>{message}</div>;
+          return (
+            <div className={msgSide} key={count}>
+              {message}
+            </div>
+          );
         })}
       </div>
 
