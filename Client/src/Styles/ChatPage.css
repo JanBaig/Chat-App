@@ -8,6 +8,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
+
 }
 
 .searchBar {
@@ -25,14 +26,23 @@
     text-align: center;
 }
 
-.right {
-    text-align: right;
-    padding-right: 2rem;
-    padding-bottom: 0.5rem;
+#right {
+    position: relative;
+    left: 5%;
+    color: blue;
 }
 
-.left {
-    text-align: left;
-    padding-left: 2rem;
-    padding-bottom: 0.5rem;
+#left {
+    position: relative;
+    left: 72%;
+    padding-bottom: 0rem;
+    color: rgb(39, 192, 143);
+}
+
+.msg_content {
+    margin-bottom: -1rem;
+}
+
+.msg_username {
+    font-size: 10px;
 }

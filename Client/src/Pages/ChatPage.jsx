@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/ChatPage.css";
+import ScrollToBottom from "react-scroll-to-bottom";
+import Message from "../Components/Message";
 import { socket } from "../Services/Socket";
 import { useParams } from "react-router-dom";
 
@@ -7,26 +9,12 @@ const ChatPage = () => {
   const [notif, setNotif] = useState(null);
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  const [msgSide, setMsgSide] = useState("right");
   const { id } = useParams();
 
   // Whenever 'socket' changes - new emit/on this renders again
   useEffect(() => {
     // Sending from client now when this page gets rendered
     socket.emit("newUser", id);
-
-    // Design details
-    socket.emit("designDetails", msgSide);
-
-    // Receiving design details for sender
-    socket.on("senderDesign", (msg) => {
-      setMsgSide(msg);
-    });
-
-    // Receiving design details for receiver
-    socket.on("receiverDesign", (msg) => {
-      setMsgSide(msg);
-    });
 
     //Display arrival of a new user
     socket.on("announceUsername", (msg) => {
@@ -35,8 +23,8 @@ const ChatPage = () => {
 
     // Displaying messages
     socket.on("sentNewMsg", (msg) => {
+      console.log(msg);
       setMessageList((messageList) => messageList.concat(msg));
-      setMessage("");
     });
 
     // Display user disconnected
@@ -51,20 +39,36 @@ const ChatPage = () => {
   }, [socket]);
 
   const btnClick = () => {
-    socket.emit("newMsg", `${id}: ${message}`);
+    // Should send the socketID/username along with this
+    const messageData = {
+      message: message,
+      username: id,
+      socketID: socket.id,
+      time:
+        new Date(Date.now()).getHours() +
+        ":" +
+        new Date(Date.now()).getMinutes(),
+    };
+
+    // Appears on sender's chat window as well
+    setMessageList((messageList) => messageList.concat(messageData));
+    // Allows for the appearance on receiver's chat window
+    socket.emit("newMsg", messageData);
+    setMessage("");
   };
 
   return (
     <div className="container">
-      <h2>Chat App</h2>
+      <div className="chat-header">
+        <h2>Chat App</h2>
+      </div>
       <h5>{notif}</h5>
-      <p>{msgSide}</p>
 
-      <div className="chatMessages">
-        {messageList.map((message, count) => {
+      <div>
+        {messageList.map((messageData, count) => {
           return (
-            <div className={msgSide} key={count}>
-              {message}
+            <div key={count}>
+              <Message messageData={messageData} socket={socket} />
             </div>
           );
         })}
